@@ -9,6 +9,7 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboa
 #sys.setdefaultencoding('UTF8')
 ThumbUp   = u"\U0001F44D" # Thumb up
 ThumbDown = u"\U0001F44E" # Thumb Down
+from fitbit_stats import fitbit_activity_summary, fitbit_summary_text
 
 def choice(chat_id,label,ch1,ch2):
 	bot.sendMessage(chat_id, label,
@@ -110,7 +111,10 @@ def handle(msg):
 		elif input == 'i don\'t like tea':
 			bot.sendMessage(chat_id,'********************')
 		elif input == 'wanna track symptoms':
-			bot.sendMessage(chat_id,'test2')
+			bot.sendMessage(chat_id,fitbit_summary_text)
+			bot.sendMessage(chat_id,fitbit_activity_summary)
+			bot.sendMessage(chat_id,'Wanna know more about heart ratio?')
+			
 		elif input == 'cool, that\'s enough.':
 			bot.sendMessage(chat_id,'I\'m glad it helped!')
 		else:
