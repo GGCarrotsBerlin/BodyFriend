@@ -4,7 +4,7 @@
 import sys
 import time
 import telepot
-from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
+from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 #reload(sys)  # Reload does the trick!
 #sys.setdefaultencoding('UTF8')
 ThumbUp   = u"\U0001F44D" # Thumb up
@@ -19,6 +19,12 @@ def choice(chat_id,label,ch1,ch2):
 									resize_keyboard=True,
 									one_time_keyboard=True
 								))
+								
+def url(chat_id,intro,label,link):
+	bot.sendMessage(chat_id, intro,
+								reply_markup=InlineKeyboardMarkup(
+									inline_keyboard=[[InlineKeyboardButton(text = label,url = link)]]
+									))
 
 
 def handle(msg):
@@ -72,7 +78,8 @@ def handle(msg):
 		elif input == 'no, it\'s not right':
 			bot.sendMessage(chat_id,'********************')		
 		elif input == 'tell me more':
-			bot.sendMessage(chat_id,'********************')
+			#bot.sendMessage(chat_id,'prova**********')		
+			url(chat_id,'Help yourself :)','www.netflix.com/Narcos','https://www.netflix.com/title/80025172')
 		elif input == 'don\'t want to stay at home':
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Ok, then exercise would be a good idea. \nFresh air and being outdoors.')
