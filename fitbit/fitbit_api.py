@@ -132,35 +132,53 @@ def MakeAPICall(InURL,AccToken,RefToken):
     #Return that this didn't work, allowing the calling function to handle it
     return False, ErrorInAPI
   
-def getSleepLastNight(retry_flag=False):
+def retrieveData(FitbitURL, retry_flag=False):
   #Main part of the code
   #Declare these global variables that we'll use for the access and refresh tokens
   AccessToken = ""
   RefreshToken = ""
-
+  
   #Get the config
   AccessToken, RefreshToken = GetConfig()
-  FitbitURL='https://api.fitbit.com/1/user/-/sleep/minutesAsleep/date/today/2016-10-15.json'
   #Make the API call
   APICallOK, APIResponse = MakeAPICall(FitbitURL, AccessToken, RefreshToken)
-  total_sleep=4.3
   if APICallOK:
     try:
-      print APIResponse[0]
-      total_sleep=float(APIResponse[0]["value"])/60
+      json_resp=(json.loads(APIResponse))
     except KeyError as k:
-      print "something went wring parsing the data {0}".format(total_sleep)
-   ##print APIResponse
+      print "something went wrong parsing the data {0}".format(total_sleep)
   else:
     if (APIResponse == TokenRefreshedOK and retry_flag is False):
       print "Refreshed the access token.  Can go again"
-      APICallOK,total_sleep=getSleepLastNight(retry_flag=True)
+      APICallOK,total_sleep=getSleepLastNight(FitbitURL, retry_flag=True)
     else:
       print ErrorInAPI
-  return APICallOK,total_sleep 
-  
-
       
+  return APICallOK,json_resp
+  
+def getSleepLastNight(retry_flag=False):
+
+  FitbitURL='https://api.fitbit.com/1/user/-/sleep/minutesAsleep/date/today/2016-10-15.json'
+  #Make the API call
+  APICallOK, json_resp = retrieveData(FitbitURL)
+  total_sleep=4.3
+  if APICallOK:
+    try:
+      total_sleep=float(json_resp['sleep-minutesAsleep'][0]["value"])/60
+    except KeyError as k:
+      print "something went wrong parsing the data {0}".format(total_sleep)
+   ##print APIResponse
+      
+  return max(total_sleep , 4.3)
+
+def getActivitySummary():
+
+  FitbitURL='https://api.fitbit.com/1/user/-/activities/date/2016-10-15.json'
+  #Make the API call
+  APICallOK, json_resp = retrieveData(FitbitURL)
+  return json_resp["summary"]
+
+
 
 
 #Main part of the code
@@ -170,4 +188,25 @@ RefreshToken = ""
 
 print "Fitbit API Test Code"
 
-getSleepLastNight()
+total_sleep  = getSleepLastNight()
+print total_sleep
+activity_summary=getActivitySummary()
+print activity_summary["steps"]
+
+  
+""" Tags in JSON we can use
+
+distances -> [{u'distance': 0.44, u'activity': u'total'}, {u'distance': 0.44, u'activity': u'tracker'}, {u'distance': 0, u'activity': u'loggedActivities'}, {u'distance': 0, u'activity': u'veryActive'}, {u'distance': 0, u'activity': u'moderatelyActive'}, {u'distance': 0.4, u'activity': u'lightlyActive'}, {u'distance': 0, u'activity': u'sedentaryActive'}]
+sedentaryMinutes -> 1216
+lightlyActiveMinutes -> 34
+caloriesOut -> 1419
+caloriesBMR -> 1310
+marginalCalories -> 41
+fairlyActiveMinutes -> 0
+veryActiveMinutes -> 0
+activityCalories -> 99
+steps -> 590
+activeScore -> -1
+"""
+
+
