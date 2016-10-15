@@ -2,6 +2,11 @@ import sys
 import time
 import telepot
 
+<<<<<<< HEAD
+=======
+#test commit 
+
+>>>>>>> f32058f4d3593a498edb229058b6ef2998815be1
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
