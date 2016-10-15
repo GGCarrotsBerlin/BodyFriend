@@ -11,8 +11,9 @@ FitbitURL ="V"
 #FitbitURL =  "https://api.fitbit.com/1/user/-/activities/date/2016-10-15.json"
 #Use this URL to refresh the access token
 TokenURL = "https://api.fitbit.com/oauth2/token"
-dir_path=os.path.dirname(__file__)
-
+#dir_path=os.path.dirname(__file__)
+#dir_path=os.getcwd()
+dir_path=os.path.dirname(os.path.abspath(__file__))
 #Get and write the tokens from here
 IniFile = dir_path +"/tokens.txt"
 
@@ -127,7 +128,7 @@ def MakeAPICall(InURL,AccToken,RefToken):
     HTTPErrorMessage = e.read()
     print "This was in the HTTP error message: " + HTTPErrorMessage
     #See what the error was
-    if (e.code == 401) and (HTTPErrorMessage.find("Access token invalid or expired") > 0):
+    if (e.code == 401) and (HTTPErrorMessage.find("expired_token") > 0):
       GetNewAccessToken(RefToken)
       return False, TokenRefreshedOK
     #Return that this didn't work, allowing the calling function to handle it
@@ -152,7 +153,7 @@ def retrieveData(FitbitURL, retry_flag=False):
   else:
     if (APIResponse == TokenRefreshedOK and retry_flag is False):
       print "Refreshed the access token.  Can go again"
-      APICallOK,total_sleep=getSleepLastNight(FitbitURL, retry_flag=True)
+      APICallOK,total_sleep=retrieveData(FitbitURL, retry_flag=True)
     else:
       print ErrorInAPI
       
@@ -186,6 +187,26 @@ def getActivitySummary():
   return json_resp
 
 
+def getHeartRatio():
+  FitbitURL='https://api.fitbit.com/1/user/-/activities/heart/date/2016-10-15/1d.json'
+  APICallOK, json_resp = retrieveData(FitbitURL)
+  try:
+    #print json_resp
+    #print (json_resp['activities-heart'][0]['value']['heartRateZones'])
+    json_resp=(json_resp['activities-heart'][0]['value']['heartRateZones'])
+    #print json_resp
+  except KeyError  as er:
+    print 'No heart rate zones {er}'.format(er=er)
+  return json_resp
+
+
+#keywords="female hygiene late period"
+#res=getArticleFeed(keywords)
+#nicePrintOut( res)	
+									  
+			
+
+
 """
 print "Fitbit API Test Code"
 
@@ -210,4 +231,4 @@ steps -> 590
 activeScore -> -1
 """
 
-
+#print getHeartRatio()

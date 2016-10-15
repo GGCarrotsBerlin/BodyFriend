@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
+import sys, re
 import time
 import telepot
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
@@ -10,7 +10,12 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboa
 ThumbUp   = u"\U0001F44D" # Thumb up
 ThumbDown = u"\U0001F44E" # Thumb Down
 Fear= u"\U0001F631"
-from fitbit_stats import fitbit_activity_summary, fitbit_summary_text
+from fitbit_stats import fitbit_activity_summary, fitbit_summary_text, fitbit_heart_ratio_summary
+import ipool.ipool_api as ipool
+
+keywords="medical research women"
+medical_article_feed=ipool.getArticleFeed(keywords)
+global_idx=0
 
 def choice(chat_id,label,ch1,ch2):
 	bot.sendMessage(chat_id, label,
@@ -116,9 +121,17 @@ def handle(msg):
 		elif "activity data" in input:
 			choice(chat_id,fitbit_activity_summary, "check heart ratio", "thats\'s enough")
 		elif "heart ratio" in input:
-			bot.sendMessage(chat_id,fitbit_heart_ratio_summary)
-			time.sleep(5)
+			if len(fitbit_heart_ratio_summary)==0:
+				bot.sendMessage(chat_id, "Hmmm... There is no heart rate data")
+			else:
+				bot.sendMessage(chat_id,fitbit_heart_ratio_summary)
+			
 			#choice(chat_id,'Let’s see what happens. I am here if you need to talk.')
+		elif re.search("article[.]|news", input):
+			if len(medical_article_feed)>0:				
+				choice((chat_id, medical_article_feed.pop(), 'More news...', 'Have a question'))
+			else:
+				bot.sendMessage(chat_id, 'Nothing new in the medical world...')
 		elif input == 'cool, that\'s enough.':
 			bot.sendMessage(chat_id,'I\'m glad it helped!')
 		else:
