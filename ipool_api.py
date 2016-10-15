@@ -48,7 +48,7 @@ def getArticleFeed(keywords):
 						if k == 'content':
 							shortcut = v[:200]
 							res.update({k:shortcut})
-					results.append(res)
+				results.append(res)
 			except KeyError as k:	
 				logger.error("key missing: {0}".format(k))
 	return results
@@ -65,7 +65,8 @@ def nicePrintOut(results):
 			
 			
 
-keywords="late period health"
+
+keywords="female hygiene late period"
 res=getArticleFeed(keywords)
 nicePrintOut( res)																  
 
