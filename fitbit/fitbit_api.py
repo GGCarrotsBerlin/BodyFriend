@@ -11,9 +11,10 @@ FitbitURL ="V"
 #FitbitURL =  "https://api.fitbit.com/1/user/-/activities/date/2016-10-15.json"
 #Use this URL to refresh the access token
 TokenURL = "https://api.fitbit.com/oauth2/token"
+dir_path=os.path.dirname(__file__)
 
 #Get and write the tokens from here
-IniFile = "tokens.txt"
+IniFile = dir_path +"/tokens.txt"
 
 #From the developer site
 OAuthTwoClientID = "228396"
@@ -110,7 +111,7 @@ def MakeAPICall(InURL,AccToken,RefToken):
   #Add the access token in the header
   req.add_header('Authorization', 'Bearer ' + AccToken)
 
-  print "I used this access token " + AccToken
+  #print "I used this access token " + AccToken
   #Fire off the request
   try:
     #Do the request
@@ -142,6 +143,7 @@ def retrieveData(FitbitURL, retry_flag=False):
   AccessToken, RefreshToken = GetConfig()
   #Make the API call
   APICallOK, APIResponse = MakeAPICall(FitbitURL, AccessToken, RefreshToken)
+  json_resp={}
   if APICallOK:
     try:
       json_resp=(json.loads(APIResponse))
@@ -176,16 +178,15 @@ def getActivitySummary():
   FitbitURL='https://api.fitbit.com/1/user/-/activities/date/2016-10-15.json'
   #Make the API call
   APICallOK, json_resp = retrieveData(FitbitURL)
-  return json_resp["summary"]
+  try:
+    json_resp=json_resp["summary"]
+    #print json_resp
+  except KeyError  as er:
+    print "No Activity Summary available {er}".format(er=er)
+  return json_resp
 
 
-
-
-#Main part of the code
-#Declare these global variables that we'll use for the access and refresh tokens
-AccessToken = ""
-RefreshToken = ""
-
+"""
 print "Fitbit API Test Code"
 
 total_sleep  = getSleepLastNight()
@@ -194,7 +195,7 @@ activity_summary=getActivitySummary()
 print activity_summary["steps"]
 
   
-""" Tags in JSON we can use
+ Tags in JSON we can use
 
 distances -> [{u'distance': 0.44, u'activity': u'total'}, {u'distance': 0.44, u'activity': u'tracker'}, {u'distance': 0, u'activity': u'loggedActivities'}, {u'distance': 0, u'activity': u'veryActive'}, {u'distance': 0, u'activity': u'moderatelyActive'}, {u'distance': 0.4, u'activity': u'lightlyActive'}, {u'distance': 0, u'activity': u'sedentaryActive'}]
 sedentaryMinutes -> 1216
