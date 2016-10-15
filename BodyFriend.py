@@ -3,8 +3,8 @@ import time
 import telepot
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
 
-
-#test commit 
+ThumbUp   = u"\U0001F44D" # Thumb up
+ThumbDown = u"\U0001F44E" # Thumb Down
 
 def handle(msg):
 	content_type, chat_type, chat_id = telepot.glance(msg)
@@ -134,16 +134,16 @@ def handle(msg):
 			bot.sendMessage(chat_id, 'Great. I will remind you to exercise and sleep early OK?',
 								reply_markup=ReplyKeyboardMarkup(
 									keyboard=[
-										[KeyboardButton(text='UP'), KeyboardButton(text='DOWN')]
+										[KeyboardButton(text=ThumbUp), KeyboardButton(text=ThumbDown)]
 									], 
 									resize_keyboard=True,
 									one_time_keyboard=True
 								))
 		elif input == 'i am still worried':
 			bot.sendMessage(chat_id,'********************')
-		elif input == 'UP':
+		elif input == ThumbUp:
 			bot.sendMessage(chat_id,'********************')
-		elif input == 'DOWN':
+		elif input == ThumbDown:
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Ok, I won’t disturb you. \nGive your body some rest and exercise.')
 			time.sleep(1.5)
