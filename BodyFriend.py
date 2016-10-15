@@ -1,8 +1,12 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys
 import time
 import telepot
 from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
-
+reload(sys)  # Reload does the trick!
+sys.setdefaultencoding('UTF8')
 ThumbUp   = u"\U0001F44D" # Thumb up
 ThumbDown = u"\U0001F44E" # Thumb Down
 
@@ -17,7 +21,7 @@ def handle(msg):
 		if input == 'hallo' or input == 'hi':
 			# # give a descriptive hint
 		   bot.sendMessage(chat_id,'Hallo '+ msg['from']['first_name']+'!\nWelcome back!')
-		   bot.sendMessage(chat_id, 'What’s up?',
+		   bot.sendMessage(chat_id, 'What's up?',
                             reply_markup=ReplyKeyboardMarkup(
                                 keyboard=[
                                     [KeyboardButton(text='Have a question'), KeyboardButton(text='Wanna track symptoms')]

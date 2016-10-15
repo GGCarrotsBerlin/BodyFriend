@@ -6,7 +6,7 @@ import json
 import os
 
 #This is the Fitbit URL to use for the API call
-FitbitURL ="https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json"
+FitbitURL ="V"
 #FitbitURL = "https://api.fitbit.com/1/user/-/heartbeat.json"
 #FitbitURL =  "https://api.fitbit.com/1/user/-/activities/date/2016-10-15.json"
 #Use this URL to refresh the access token
@@ -131,6 +131,37 @@ def MakeAPICall(InURL,AccToken,RefToken):
       return False, TokenRefreshedOK
     #Return that this didn't work, allowing the calling function to handle it
     return False, ErrorInAPI
+  
+def getSleepLastNight(retry_flag=False):
+  #Main part of the code
+  #Declare these global variables that we'll use for the access and refresh tokens
+  AccessToken = ""
+  RefreshToken = ""
+
+  #Get the config
+  AccessToken, RefreshToken = GetConfig()
+  FitbitURL='https://api.fitbit.com/1/user/-/sleep/minutesAsleep/date/today/2016-10-15.json'
+  #Make the API call
+  APICallOK, APIResponse = MakeAPICall(FitbitURL, AccessToken, RefreshToken)
+  total_sleep=4.3
+  if APICallOK:
+    try:
+      print APIResponse[0]
+      total_sleep=float(APIResponse[0]["value"])/60
+    except KeyError as k:
+      print "something went wring parsing the data {0}".format(total_sleep)
+   ##print APIResponse
+  else:
+    if (APIResponse == TokenRefreshedOK and retry_flag is False):
+      print "Refreshed the access token.  Can go again"
+      APICallOK,total_sleep=getSleepLastNight(retry_flag=True)
+    else:
+      print ErrorInAPI
+  return APICallOK,total_sleep 
+  
+
+      
+
 
 #Main part of the code
 #Declare these global variables that we'll use for the access and refresh tokens
@@ -139,16 +170,4 @@ RefreshToken = ""
 
 print "Fitbit API Test Code"
 
-#Get the config
-AccessToken, RefreshToken = GetConfig()
-
-#Make the API call
-APICallOK, APIResponse = MakeAPICall(FitbitURL, AccessToken, RefreshToken)
-
-if APICallOK:
-  print APIResponse
-else:
-  if (APIResponse == TokenRefreshedOK):
-    print "Refreshed the access token.  Can go again"
-  else:
-   print ErrorInAPI
+getSleepLastNight()
