@@ -15,13 +15,13 @@ def handle(msg):
 		#print(msg['text'])
 		if str(msg['text']) == 'Hallo':
 			# # give a descriptive hint
-		   bot.sendMessage(chat_id,"Hallo "+ msg['from']['first_name']+"!\nWelcome back! What’s up?")
-		   bot.sendMessage(chat_id, "testing custom keyboard",
+		   bot.sendMessage(chat_id,"Hallo "+ msg['from']['first_name']+"!\nWelcome back!")
+		   bot.sendMessage(chat_id, "What’s up?",
                             reply_markup=ReplyKeyboardMarkup(
                                 keyboard=[
-                                    [KeyboardButton(text="Yes"), KeyboardButton(text="No")]
+                                    [KeyboardButton(text="Have a question"), KeyboardButton(text="Wanna track symptoms")]
                                 ]
-                            ))
+                            ))#,force_reply=True)
 		else:
 			bot.sendMessage(chat_id,"Sorry, I don't understand")
 
