@@ -1,6 +1,8 @@
 import sys
 import time
 import telepot
+from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
+
 
 #test commit 
 
@@ -13,7 +15,13 @@ def handle(msg):
 		#print(msg['text'])
 		if str(msg['text']) == 'Hallo':
 			# # give a descriptive hint
-		   bot.sendMessage(chat_id,"Hallo "+ msg['from']['first_name']+"!")
+		   bot.sendMessage(chat_id,"Hallo "+ msg['from']['first_name']+"!\nWelcome back! What’s up?")
+		   bot.sendMessage(chat_id, "testing custom keyboard",
+                            reply_markup=ReplyKeyboardMarkup(
+                                keyboard=[
+                                    [KeyboardButton(text="Yes"), KeyboardButton(text="No")]
+                                ]
+                            ))
 		else:
 			bot.sendMessage(chat_id,"Sorry, I don't understand")
 
