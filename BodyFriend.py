@@ -33,7 +33,8 @@ def handle(msg):
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,"Ok, I got something.")
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,"Your average cycle is 28 days. Today you are on day 30. \nDelays of *2-4 days are very usual and normal*.")
+			bot.sendMessage(chat_id,"Your average cycle is 28 days. Today you are on day 30.")
+			bot.sendMessage(chat_id,"\nDelays of <b>2-4 days are very usual and normal</b>.",parse_mode="HTML")
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,"In Berlin alone, 67% of women your age. \nhave periods delayed by 3 days at least 5 times a year.")
 	
