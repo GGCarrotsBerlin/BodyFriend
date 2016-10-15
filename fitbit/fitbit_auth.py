@@ -12,7 +12,7 @@ TokenURL = "https://api.fitbit.com/oauth2/token"
 
 #I got this from the first verifier part when authorising my application
 #AuthorisationCode = "c6b5a8b60d10e9c2c51361b1114db05f5ae11822#_=_"
-AuthorisationCode = "c6b5a8b60d10e9c2c51361b1114db05f5ae11822"
+AuthorisationCode = "2638e980651409b0385264c188d0557549f45ab7"
 #Form the data payload
 BodyText = {'code' : AuthorisationCode,
             'redirect_uri' : 'http://eatworklove.de/',
