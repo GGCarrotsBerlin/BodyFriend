@@ -65,7 +65,8 @@ def nicePrintOut(results):
 			
 			
 
-keywords="later menstruation"
+
+keywords="female hygiene late period"
 res=getArticleFeed(keywords)
 nicePrintOut( res)																  
 
