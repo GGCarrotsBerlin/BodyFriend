@@ -64,19 +64,6 @@ def nicePrintOut(results):
 #res=getArticleFeed(keywords)
 #nicePrintOut( res)	
 #print res
-								
-
-"""				
-					for k,v in d.iteritems():
-						
-						if k in ['title', 'publishedUrl', 'keywords']:
-							res.update({k:v})				  		
-							##print k, '->',}(v) 
-						if k == 'content':
-							shortcut = v[:200]
-							res.update({k:shortcut})
-							"""
-					##results.append(res)
-																  
+				  
 																  
 			
