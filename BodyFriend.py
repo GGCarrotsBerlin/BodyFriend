@@ -55,7 +55,7 @@ def handle(msg):
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Hallo '+ msg['from']['first_name']+'!')
 			time.sleep(1.5)
-			choice(chat_id,'What\'s up?','Have a question','Track symptoms')
+			choice(chat_id,'What\'s up?','Have a question','Body data')
 		elif re.search('question', input):
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Just tell me!')
@@ -131,7 +131,7 @@ def handle(msg):
 			bot.sendMessage(chat_id,'Let’s see what happens. I am here if you need to talk.')
 		elif input == 'i don\'t like tea':
 			bot.sendMessage(chat_id,'********************')
-		elif input == 'track symptoms':
+		elif re.search('body data', input):
 			choice(chat_id,fitbit_summary_text + " " +Fear, "More data", "thats\'s enough" )
 		elif "more data" in input:
 			bot.sendMessage(chat_id,fitbit_activity_summary,parse_mode='HTML')
