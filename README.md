@@ -3,9 +3,9 @@
 Description:
 BodyFriend is an intimate conversation with your body. 
 
-The idea is to access your data from
+The idea is to access your data from:
    - medical records
-   - wearables to track your fitness level - FitBit, 8fit, iWatch, Jawbone etc
+   - wearables to track your fitness level, e.g FitBit, 8fit, iWatch, Jawbone etc
    - social media to know your hobbies, friends etc 
    - other apps like MyCalendar
  and connect it to reliable data sources like
