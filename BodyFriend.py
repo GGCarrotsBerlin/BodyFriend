@@ -12,6 +12,7 @@ ThumbDown = u"\U0001F44E" # Thumb Down
 Fear= u"\U0001F631"
 Relief = u"\U0001F605"
 Women = u"\U0001F46F"
+Clock= u"\U000023F0"
 
 from fitbit_stats import fitbit_activity_summary, fitbit_summary_text, fitbit_heart_ratio_summary, sleepLastNight
 import ipool.ipool_api as ipool
@@ -65,17 +66,17 @@ def handle(msg):
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'67% of women your age in Berlin have the same problem! '+Women)
 			time.sleep(2)
-			bot.sendMessage(chat_id, articles_feed[0])t 
-			choice(chat_id,'What now?','Cool, that’s enough.','Anything else?')
-		elif input == 'anything else?':
+			bot.sendMessage(chat_id, articles_feed[0])
+			choice(chat_id,'More details?','That’s enough','More')
+		elif input == 'more':
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'OK, let me check more data.')
+			bot.sendMessage(chat_id,'Looks like you ovulated on 3rd Sept.')
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'From your temperature and fluids, looks like you ovulated on 3rd Sept. \nThat’s 2 later than your previous cycles.')
+			bot.sendMessage(chat_id,'That’s 2 days later than last month.')#+Clock)
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'Your fitbit says you only slept '+ str(sleepLastNight) +' hours for the last night.')
+			bot.sendMessage(chat_id,'Fitbit says you slept '+ str(sleepLastNight) +' hours last night.')
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'It also says that you have not done any exercise for 10 days.')
+			bot.sendMessage(chat_id,'And no exercise for 10 days '+Fear)
 			choice(chat_id,'Is it right?','Yes, it\'s right','No, it\'s not right')
 		elif input == 'yes, it\'s right':
 			time.sleep(1.5)
@@ -142,7 +143,7 @@ def handle(msg):
 				choice(chat_id, medical_article_feed.pop(), 'More news...', 'Have a question')
 			else:
 				bot.sendMessage(chat_id, 'Nothing new in the medical world...')
-		elif input == 'cool, that\'s enough.':
+		elif input == 'that\'s enough':
 			bot.sendMessage(chat_id,'I\'m glad it helped!')
 		else:
 			bot.sendMessage(chat_id,'Sorry, I can\'t understand')
