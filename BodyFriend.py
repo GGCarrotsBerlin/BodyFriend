@@ -65,7 +65,7 @@ def handle(msg):
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'67% of women your age in Berlin have the same problem! '+Women)
 			time.sleep(2)
-			bot.sendMessage(chat_id, articles_feed[0])
+			bot.sendMessage(chat_id, articles_feed[0])t 
 			choice(chat_id,'What now?','Cool, that’s enough.','Anything else?')
 		elif input == 'anything else?':
 			time.sleep(1.5)
