@@ -134,7 +134,7 @@ def handle(msg):
 		elif input == 'track symptoms':
 			choice(chat_id,fitbit_summary_text + " " +Fear, "More data", "thats\'s enough" )
 		elif "more data" in input:
-			bot.sendMessage(chat_id,fitbit_activity_summary)
+			bot.sendMessage(chat_id,fitbit_activity_summary,parse_mode='HTML')
 			time.sleep(3)
 			bot.sendMessage(chat_id,fitbit_activity_summary2)
 

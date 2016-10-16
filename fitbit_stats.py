@@ -1,4 +1,5 @@
 import fitbit.fitbit_api as fitbit
+Nerd=u"\U0001F913'
 """
 
 For the activities/log/calories resource, each data point also includes the level field that reflects calculated activity level for that time period 
@@ -19,14 +20,14 @@ sleepLastNight=fitbit.getSleepLastNight()
 fitbit_summary_text='Yesterday you {only} did {steps} steps'.format(steps=activitySummary['steps'],
 																							 only='only' if activitySummary["activeScore"]<0 else '',
 																							sleep=sleepLastNight)
-fitbit_activity_summary='In general, you were {option}. Some stats for you: total distance:{td}, lightly active minutes:{am}, sedentary minutes:{sm}. '.format(
+fitbit_activity_summary='In general, you were {option}. Some stats for you: total distance:<b>{td}</b>, lightly active minutes:<b>{am}</b>, sedentary minutes:<b>{sm}</b>. '.format(
 	option=getOptionText(activitySummary['activeScore']),
 	td=activitySummary["distances"][0]["distance"],
 	am=activitySummary["lightlyActiveMinutes"],
 	sm=activitySummary["sedentaryMinutes"]
 	)
 if activitySummary['activeScore']<=1:
-    fitbit_activity_summary2="\n It looks like you were hacking too much ..."
+    fitbit_activity_summary2="\n It looks like you were hacking too much ..." + (Nerd *3) 
 
 heart_ratio=fitbit.getHeartRatio()
 fitbit_heart_ratio_summary=''
