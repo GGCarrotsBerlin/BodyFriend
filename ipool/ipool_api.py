@@ -25,6 +25,7 @@ logger.addHandler(ch)
 
 def getArticleFeed(keywords):
 	r=requests.get('https://sandbox-api.ipool.asideas.de/sandbox/api/search', params={'q':keywords, 'types':'article','location':'Berlin'},  auth=HTTPBasicAuth('hackathon', 'hackme'))
+	logger.info(r.url)
 	results=[]
 	# r is an Response object; if you get <Response [200]> you're good
 	# have a look at https://github.com/kennethreitz/requests
@@ -40,15 +41,11 @@ def getArticleFeed(keywords):
 		for d in docs:
 			try:
 				if re.search('en',d['language']):
-					res={}
-					for k,v in d.iteritems():
-						if k in ['title', 'publishedUrl', 'keywords']:
-							res.update({k:v})				  		
-							##print k, '->',}(v) 
-						if k == 'content':
-							shortcut = v[:200]
-							res.update({k:shortcut})
-					results.append(res)
+					if d.has_key('publishedUrl'):
+						results.append(d['publishedUrl'])
+					elif d.has_key('content'):
+						results.append(d['content'][:200])
+
 			except KeyError as k:	
 				logger.error("key missing: {0}".format(k))
 	return results
@@ -65,10 +62,24 @@ def nicePrintOut(results):
 			
 			
 
-keywords="late period health"
-res=getArticleFeed(keywords)
-nicePrintOut( res)																  
 
+#eywords="medical research women"
+#res=getArticleFeed(keywords)
+#nicePrintOut( res)	
+#print res
+								
+
+"""				
+					for k,v in d.iteritems():
+						
+						if k in ['title', 'publishedUrl', 'keywords']:
+							res.update({k:v})				  		
+							##print k, '->',}(v) 
+						if k == 'content':
+							shortcut = v[:200]
+							res.update({k:shortcut})
+							"""
+					##results.append(res)
 																  
 																  
 			
