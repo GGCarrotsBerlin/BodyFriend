@@ -31,4 +31,4 @@ Magdalena Sendal
 Zampeta Kalogeropoulou
 Katrin Bartels
 
-![alt tag] (https://cloud.githubusercontent.com/assets/5223350/19417524/84e9906c-93af-11e6-969a-91db186a6a12.png)
+![alt tag] (https://cloud.githubusercontent.com/assets/5223350/19417551/224bfc14-93b0-11e6-8d89-fbd81273b657.png)
