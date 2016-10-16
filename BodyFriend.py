@@ -12,8 +12,12 @@ ThumbDown = u"\U0001F44E" # Thumb Down
 Fear= u"\U0001F631"
 Relief = u"\U0001F605"
 Women = u"\U0001F46F"
+Clock= u"\U000023F0"
+Sleep= u"\U0001F634"
+Tv=u"\U0001F3AC"
+Ball=u"\U0001F609"
 
-from fitbit_stats import fitbit_activity_summary, fitbit_summary_text, fitbit_heart_ratio_summary, sleepLastNight
+from fitbit_stats import fitbit_activity_summary, fitbit_summary_text, fitbit_heart_ratio_summary, fitbit_activity_summary2, sleepLastNight
 import ipool.ipool_api as ipool
 from articles import articles_feed
 
@@ -60,44 +64,45 @@ def handle(msg):
 			bot.sendMessage(chat_id,'OK. Let me check some data.')
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Your cycle is usually 28 days.\nToday you are on day 30 '+Relief)
-			time.sleep(1.5)
+			time.sleep(3)
 			bot.sendMessage(chat_id,'Delays up to 6 days are normal!')
-			time.sleep(1.5)
+			time.sleep(3)
 			bot.sendMessage(chat_id,'67% of women your age in Berlin have the same problem! '+Women)
-			time.sleep(2)
-			bot.sendMessage(chat_id, articles_feed[0])t 
-			choice(chat_id,'What now?','Cool, that’s enough.','Anything else?')
-		elif input == 'anything else?':
+			time.sleep(3)
+			bot.sendMessage(chat_id, articles_feed[0])
+			choice(chat_id,'More details?','That’s enough','More')
+		elif input == 'more':
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'OK, let me check more data.')
+			bot.sendMessage(chat_id,'Looks like you ovulated on 3rd Sept.')
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'From your temperature and fluids, looks like you ovulated on 3rd Sept. \nThat’s 2 later than your previous cycles.')
+			bot.sendMessage(chat_id,'That’s 2 days later than last month.')#+Clock)
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'Your fitbit says you only slept '+ str(sleepLastNight) +' hours for the last night.')
-			time.sleep(1.5)
-			bot.sendMessage(chat_id,'It also says that you have not done any exercise for 10 days.')
+			bot.sendMessage(chat_id,'Fitbit says you slept '+ str(sleepLastNight) +' hours last night.')
+			time.sleep(3)
+			bot.sendMessage(chat_id,'And no exercise for 10 days '+Fear)
 			choice(chat_id,'Is it right?','Yes, it\'s right','No, it\'s not right')
 		elif input == 'yes, it\'s right':
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'Lack of sleep and exercise affect your period. \nYou need to rest more girl!')
+			bot.sendMessage(chat_id,'You need to rest more girl! '+Sleep)
+			time.sleep(1.5)
 			bot.sendMessage(chat_id,articles_feed[1])
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'Your resting heartbeat has been higher than usual.')
-			time.sleep(1.5)
-			choice(chat_id,'Do you feel more stressed than normal?','Yes, a little','No, I\'m not stressed')
+			choice(chat_id,'Feel more stressed than usual?','Yes, a little','No, I\'m not stressed')
 		elif input == 'yes, a little':
-			bot.sendMessage(chat_id,'Ok, let’s make a plan. \nWe need to bring your stress level down.')
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'How about a film tonight and sleeping early?')
-			choice(chat_id,'New season of Narcos is out on Netflix.','Tell me more','Don\'t want to stay at home')
+			bot.sendMessage(chat_id,'We need to bring your stress level down.')
+			time.sleep(1.5)
+			bot.sendMessage(chat_id,'How about a film tonight and sleep early? ' +Tv)
+			time.sleep(1.5)
+			choice(chat_id,'New season of Narcos is out on Netflix.','Tell me more','Not really')
 		elif input == 'no, i\'m not stressed':
 			bot.sendMessage(chat_id,'********************')
 		elif input == 'no, it\'s not right':
 			bot.sendMessage(chat_id,'********************')		
 		elif input == 'tell me more':
-			#bot.sendMessage(chat_id,'prova**********')		
-			url(chat_id,'Help yourself :)','www.netflix.com/Narcos','https://www.netflix.com/title/80025172')
-		elif input == 'don\'t want to stay at home':
+			bot.sendMessage(chat_id,'https://www.netflix.com/title/80025172')
+			#url(chat_id,'Enjoy :)','www.netflix.com/Narcos','https://www.netflix.com/title/80025172')
+		elif input == 'not really':
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Ok, then exercise would be a good idea. \nFresh air and being outdoors.')
 			time.sleep(1.5)
@@ -117,8 +122,8 @@ def handle(msg):
 			choice(chat_id,'Great. I will remind you to exercise and sleep early OK?',ThumbUp,ThumbDown)
 		elif input == 'i am still worried':
 			bot.sendMessage(chat_id,'********************')
-		elif input == ThumbUp:
-			bot.sendMessage(chat_id,'********************')
+		elif input == ThumbUp or input== u"\u0001f44d":
+			bot.sendMessage(chat_id,'Great! I am here if you need me :)')
 		elif input == ThumbDown:
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Ok, I won’t disturb you. \nGive your body some rest and exercise.')
@@ -126,10 +131,13 @@ def handle(msg):
 			bot.sendMessage(chat_id,'Let’s see what happens. I am here if you need to talk.')
 		elif input == 'i don\'t like tea':
 			bot.sendMessage(chat_id,'********************')
-		elif input == 'wanna track symptoms':
-			choice(chat_id,fitbit_summary_text + " " +Fear, "I want more activity data", "thats\'s enough" )
-		elif "activity data" in input:
-			choice(chat_id,fitbit_activity_summary, "check heart ratio", "thats\'s enough")
+		elif input == 'track symptoms':
+			choice(chat_id,fitbit_summary_text + " " +Fear, "More data", "thats\'s enough" )
+		elif "more data" in input:
+			bot.sendMessage(chat_id,fitbit_activity_summary)
+			time.sleep(3)
+			bot.sendMessage(chat_id,fitbit_activity_summary2)
+
 		elif "heart ratio" in input:
 			if len(fitbit_heart_ratio_summary)==0:
 				bot.sendMessage(chat_id, "Hmmm... There is no heart rate data")
@@ -137,12 +145,12 @@ def handle(msg):
 				bot.sendMessage(chat_id,fitbit_heart_ratio_summary)
 			
 			#choice(chat_id,'Let’s see what happens. I am here if you need to talk.')
-		elif re.search("article[.]|news", input):
-			if len(medical_article_feed)>0:				
+		elif re.search('article|news', input):
+			if len(medical_article_feed)>0:
 				choice(chat_id, medical_article_feed.pop(), 'More news...', 'Have a question')
 			else:
 				bot.sendMessage(chat_id, 'Nothing new in the medical world...')
-		elif input == 'cool, that\'s enough.':
+		elif input == 'that\'s enough':
 			bot.sendMessage(chat_id,'I\'m glad it helped!')
 		elif re.search('search', input):
 			inp_str= input.split(' ')
@@ -150,7 +158,7 @@ def handle(msg):
 			keywords= (' '.join([inp for inp in inp_str if (len(inp)>3 and inp not in ['search'])]))
 			medical_article_feed=ipool.getArticleFeed(keywords)
 			if len(medical_article_feed)>0:				
-				choice(chat_id, medical_article_feed.pop(), 'More news...', 'Have a question')
+				choice(chat_id, medical_article_feed.pop(), ThumbUp, ThumbDown)
 			else:
 				bot.sendMessage(chat_id, 'No article found... try different search criteria')
 			
