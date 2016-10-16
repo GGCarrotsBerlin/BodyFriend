@@ -1,4 +1,4 @@
-# BodyFriend
+# BodyFriend https://cloud.githubusercontent.com/assets/5223350/19417524/84e9906c-93af-11e6-969a-91db186a6a12.png
 
 Description:
 BodyFriend is an intimate conversation with your body. 
