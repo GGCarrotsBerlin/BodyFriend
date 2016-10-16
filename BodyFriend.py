@@ -145,6 +145,16 @@ def handle(msg):
 				bot.sendMessage(chat_id, 'Nothing new in the medical world...')
 		elif input == 'that\'s enough':
 			bot.sendMessage(chat_id,'I\'m glad it helped!')
+		elif re.search('search', input):
+			inp_str= input.split(' ')
+			print inp_str 
+			keywords= (' '.join([inp for inp in inp_str if (len(inp)>3 and inp not in ['search'])]))
+			medical_article_feed=ipool.getArticleFeed(keywords)
+			if len(medical_article_feed)>0:				
+				choice(chat_id, medical_article_feed.pop(), 'More news...', 'Have a question')
+			else:
+				bot.sendMessage(chat_id, 'No article found... try different search criteria')
+			
 		else:
 			bot.sendMessage(chat_id,'Sorry, I can\'t understand')
 
