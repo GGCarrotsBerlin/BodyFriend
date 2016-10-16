@@ -59,9 +59,6 @@ def nicePrintOut(results):
 				print k, "---->", v 
 
 			print "\n"
-			
-			
-
 
 #eywords="medical research women"
 #res=getArticleFeed(keywords)

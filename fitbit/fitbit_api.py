@@ -189,10 +189,10 @@ def getActivitySummary():
 
 
 def getHeartRatio():
-  FitbitURL='https://api.fitbit.com/1/user/-/activities/heart/date/2016-10-15/1d.json'
+  FitbitURL='https://api.fitbit.com/1/user/-/activities/heart/date/2016-10-16/1d.json'
   APICallOK, json_resp = retrieveData(FitbitURL)
   try:
-    #print json_resp
+    print json_resp
     #print (json_resp['activities-heart'][0]['value']['heartRateZones'])
     json_resp=(json_resp['activities-heart'][0]['value']['heartRateZones'])
     #print json_resp
