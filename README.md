@@ -13,7 +13,7 @@ and connect it to reliable data sources like
 
    - medical article database like pubmed.org, ipool etc
    - online search engines
-so that BodyFriend is your first point of contact to adress your health concerns and get reliable answers.
+so that BodyFriend is your first point of contact to address your health concerns and get reliable answers.
 
 Future ideas, improvements:
   - use of AI to make the conversation customized
