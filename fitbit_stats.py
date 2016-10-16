@@ -16,7 +16,7 @@ sleepLastNight=fitbit.getSleepLastNight()
 #except Error as e:
 #	print "something went wrong calling the fitbit api"
 
-fitbit_summary_text='Yesterday you did {only} {steps} steps and slept {only} {sleep} hours'.format(steps=activitySummary['steps'], 
+fitbit_summary_text='Yesterday you {only} did {steps} steps'.format(steps=activitySummary['steps'],
 																							 only='only' if activitySummary["activeScore"]<0 else '',
 																							sleep=sleepLastNight)
 fitbit_activity_summary='In general, you were {option}. Some stats for you: total distance:{td}, lightly active minutes:{am}, sedentary minutes:{sm}. '.format(
@@ -26,7 +26,7 @@ fitbit_activity_summary='In general, you were {option}. Some stats for you: tota
 	sm=activitySummary["sedentaryMinutes"]
 	)
 if activitySummary['activeScore']<=1:
-    fitbit_activity_summary+="\n It looks like you were hacking too much ...GO get some fresh air"
+    fitbit_activity_summary2="\n It looks like you were hacking too much ..."
 
 heart_ratio=fitbit.getHeartRatio()
 fitbit_heart_ratio_summary=''
