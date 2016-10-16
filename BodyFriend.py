@@ -10,6 +10,9 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboa
 ThumbUp   = u"\U0001F44D" # Thumb up
 ThumbDown = u"\U0001F44E" # Thumb Down
 Fear= u"\U0001F631"
+Relief = u"\U0001F605"
+Women = u"\U0001F46F"
+
 from fitbit_stats import fitbit_activity_summary, fitbit_summary_text, fitbit_heart_ratio_summary, sleepLastNight
 import ipool.ipool_api as ipool
 from articles import articles_feed
@@ -45,19 +48,22 @@ def handle(msg):
 		input = str(msg['text']).lower()
 		if input == 'hallo' or input == 'hi':
 			# # give a descriptive hint
-		   bot.sendMessage(chat_id,'Hallo '+ msg['from']['first_name']+'!\nWelcome back!')
-		   choice(chat_id,'What\'s up?','Have a question','Wanna track symptoms')
+			time.sleep(1.5)
+			bot.sendMessage(chat_id,'Hallo '+ msg['from']['first_name']+'!')
+			time.sleep(1.5)
+			choice(chat_id,'What\'s up?','Have a question','Track symptoms')
 		elif re.search('question', input):
+			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Just tell me!')
 		elif 'period' in input:
-			#time.sleep(0.9)
-			bot.sendMessage(chat_id,'OK. Let’s stay cool for a minute ok? I will check some data.')
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'Ok, I got something.')
+			bot.sendMessage(chat_id,'OK. Let me check some data.')
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'Your average cycle is 28 days. Today you are on day 30. \nDelays of <b>2-4 days are very usual and normal</b>.',parse_mode='HTML')
+			bot.sendMessage(chat_id,'Your cycle is usually 28 days.\nToday you are on day 30 '+Relief)
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'In Berlin alone, 67% of women your age. \nhave periods delayed by 3 days at least 5 times a year.')
+			bot.sendMessage(chat_id,'Delays up to 6 days are normal!')
+			time.sleep(1.5)
+			bot.sendMessage(chat_id,'67% of women your age in Berlin have the same problem! '+Women)
 			time.sleep(2)
 			bot.sendMessage(chat_id, articles_feed[0])
 			choice(chat_id,'What now?','Cool, that’s enough.','Anything else?')
