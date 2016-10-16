@@ -1,8 +1,9 @@
 
-article1 ={
-'publishedUrl':'http://gynaeonline.com/late_period.htm'
+articles_feed =[  'http://gynaeonline.com/late_period.htm',
+				'http://natural-fertility-info.com/problems-sleeping-hormonal-balance.html'
+		  ]
+		   
                                                  
-}
 """
 article1 = {
 'title':'Delayed / Late Period'

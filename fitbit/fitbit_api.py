@@ -171,7 +171,7 @@ def getSleepLastNight(retry_flag=False):
     except KeyError as k:
       print "something went wrong parsing the data {0}".format(total_sleep)
    ##print APIResponse
-      
+  print json_resp
   return max(total_sleep , 4.3)
 
 def getActivitySummary():
@@ -184,6 +184,7 @@ def getActivitySummary():
     #print json_resp
   except KeyError  as er:
     print "No Activity Summary available {er}".format(er=er)
+  print json_resp
   return json_resp
 
 
@@ -197,6 +198,7 @@ def getHeartRatio():
     #print json_resp
   except KeyError  as er:
     print 'No heart rate zones {er}'.format(er=er)
+  print json_resp
   return json_resp
 
 

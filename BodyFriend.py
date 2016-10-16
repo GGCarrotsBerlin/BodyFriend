@@ -10,12 +10,13 @@ from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboa
 ThumbUp   = u"\U0001F44D" # Thumb up
 ThumbDown = u"\U0001F44E" # Thumb Down
 Fear= u"\U0001F631"
-from fitbit_stats import fitbit_activity_summary, fitbit_summary_text, fitbit_heart_ratio_summary
+from fitbit_stats import fitbit_activity_summary, fitbit_summary_text, fitbit_heart_ratio_summary, sleepLastNight
 import ipool.ipool_api as ipool
+from articles import articles_feed
 
 keywords="medical research women"
 medical_article_feed=ipool.getArticleFeed(keywords)
-global_idx=0
+
 
 def choice(chat_id,label,ch1,ch2):
 	bot.sendMessage(chat_id, label,
@@ -46,7 +47,7 @@ def handle(msg):
 			# # give a descriptive hint
 		   bot.sendMessage(chat_id,'Hallo '+ msg['from']['first_name']+'!\nWelcome back!')
 		   choice(chat_id,'What\'s up?','Have a question','Wanna track symptoms')
-		elif input == 'have a question':
+		elif re.search('question', input):
 			bot.sendMessage(chat_id,'Just tell me!')
 		elif 'period' in input:
 			#time.sleep(0.9)
@@ -57,6 +58,8 @@ def handle(msg):
 			bot.sendMessage(chat_id,'Your average cycle is 28 days. Today you are on day 30. \nDelays of <b>2-4 days are very usual and normal</b>.',parse_mode='HTML')
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'In Berlin alone, 67% of women your age. \nhave periods delayed by 3 days at least 5 times a year.')
+			time.sleep(2)
+			bot.sendMessage(chat_id, articles_feed[0])
 			choice(chat_id,'What now?','Cool, that’s enough.','Anything else?')
 		elif input == 'anything else?':
 			time.sleep(1.5)
@@ -64,13 +67,14 @@ def handle(msg):
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'From your temperature and fluids, looks like you ovulated on 3rd Sept. \nThat’s 2 later than your previous cycles.')
 			time.sleep(1.5)
-			bot.sendMessage(chat_id,'Your fitbit says you only slept 4 hours for the last night.')
+			bot.sendMessage(chat_id,'Your fitbit says you only slept '+ str(sleepLastNight) +' hours for the last night.')
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'It also says that you have not done any exercise for 10 days.')
 			choice(chat_id,'Is it right?','Yes, it\'s right','No, it\'s not right')
 		elif input == 'yes, it\'s right':
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Lack of sleep and exercise affect your period. \nYou need to rest more girl!')
+			bot.sendMessage(chat_id,articles_feed[1])
 			time.sleep(1.5)
 			bot.sendMessage(chat_id,'Your resting heartbeat has been higher than usual.')
 			time.sleep(1.5)
@@ -129,7 +133,7 @@ def handle(msg):
 			#choice(chat_id,'Let’s see what happens. I am here if you need to talk.')
 		elif re.search("article[.]|news", input):
 			if len(medical_article_feed)>0:				
-				choice((chat_id, medical_article_feed.pop(), 'More news...', 'Have a question'))
+				choice(chat_id, medical_article_feed.pop(), 'More news...', 'Have a question')
 			else:
 				bot.sendMessage(chat_id, 'Nothing new in the medical world...')
 		elif input == 'cool, that\'s enough.':
