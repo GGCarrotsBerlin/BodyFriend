@@ -8,6 +8,7 @@ The idea is to access your data from:
    - wearables to track your fitness level, e.g FitBit, 8fit, iWatch, Jawbone etc
    - social media to know your hobbies, friends etc 
    - other apps like MyCalendar
+   
  and connect it to reliable data sources like
    - medical article database like pubmed.org, ipool etc
    - online search engines
